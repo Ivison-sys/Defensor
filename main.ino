@@ -2,6 +2,7 @@
 #define BUZZER 10
 #define TRIG_PIN 2
 #define ECHO_PIN 3
+#define Rele 6
 
 Servo ServoRota;
 Servo Pistao;
@@ -34,6 +35,7 @@ void setup() {
     pinMode(TRIG_PIN, OUTPUT);
     pinMode(ECHO_PIN, INPUT);
     ServoRota.attach(4);
+    pinMode(Rele, OUTPUT);
     Pistao.attach(5);
     Pistao.write(70);
 }
@@ -42,7 +44,7 @@ void loop() {
 
   digitalWrite(TRIG_PIN, LOW);
   delayMicroseconds(2);
-  digitalWrite(TRIG_PIN, HIGH);
+  digitalWrite(TRIG_PIN, HIGH); 
   delayMicroseconds(10);
   digitalWrite(TRIG_PIN, LOW);
 
@@ -53,21 +55,17 @@ void loop() {
     Serial.print(distance);
     Serial.println(" cm");
     Serial.println("Entrei");
-    Pistao.write(0);
+    digitalWrite(Rele, 1);
     delay(500);
+    Pistao.write(0);
+    delay(200);
     Pistao.write(70);
     delay(500);
   }
   else{
     angle();
     ServoRota.write(angulo);
+    digitalWrite(Rele, 0);
     delay(100);
-    Serial.println(angulo);
   }
-  
-
-  Serial.print("Distância: ");
-  Serial.print(distance);
-  Serial.println(" cm");
-  delay(100);
 }
