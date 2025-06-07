@@ -12,6 +12,8 @@ int x = 5;
 int angulo = 0; 
 bool frente = true;
 
+int isPr = 0;
+
 void angle(){
   delay(20);
   if(angulo == 0){
@@ -56,13 +58,20 @@ void loop() {
     Serial.println(" cm");
     Serial.println("Entrei");
     digitalWrite(Rele, 1);
-    delay(500);
+    if(isPr){
+      delay(700);
+    }
+    else{
+      delay(500);
+    }
     Pistao.write(0);
     delay(200);
     Pistao.write(70);
     delay(500);
+    isPr = 0;
   }
   else{
+    isPr = 1;
     angle();
     ServoRota.write(angulo);
     digitalWrite(Rele, 0);
